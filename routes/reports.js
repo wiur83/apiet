@@ -1,6 +1,21 @@
 var express = require('express');
 var router = express.Router();
 
+router.post('/', function(req, res, next) {
+    console.log(req.body);
+    // const data = {
+    //         title1: "Installera moduler",
+    //         text1: "För att installera moduler så använde jag 'npm install' följt av namnet på modulen. Jag valde också oftast att skriva --save efter npm install för att den automatiskt ska läggas till i package.json under dependencies.",
+    //         title2: "Starta me-app",
+    //         text2: "För att starta appen kör jag: npm start"
+    // };
+
+    res.json(req.body);
+});
+
+
+
+
 router.get('/week/1', function(req, res, next) {
     const data = {
             title1: "Installera moduler",

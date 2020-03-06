@@ -6,29 +6,55 @@ const port = 8333;
 const bodyParser = require("body-parser");
 
 
-
 const index = require('./routes/index');
-const hello = require('./routes/hello');
 const reports = require('./routes/reports');
+const hello = require('./routes/hello');
+
+const test = require('./routes/test');
+const login = require('./routes/login');
+
+
+//bodyParser
+app.use(bodyParser.json()); // for parsing application/json
+app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+
 
 app.use('/', index);
-app.use('/hello', hello);
 app.use('/reports', reports);
+app.use('/hello', hello);
+
+app.use('/test', test);
+app.use('/login', login);
+
+
+// POST http://localhost:8080/api/users
+
+// Add a route
+app.post("/logg", (req, res) => {
+  console.log("----------------");
+  console.log(req.body);
+  console.log("----------------");
+
+
+  res.end("string-trosa");
 
 
 
+});
 
 
 
-
-
-
-
+//***********************************
 //Kanske ta bort?
 const sqlite3 = require('sqlite3').verbose();
 const db = new sqlite3.Database('./db/texts.sqlite');
+//***********************************
 
 
+
+
+//***********************************
+//Vet ej
 app.use(cors());
 
 // don't show the log when it is test
@@ -37,7 +63,7 @@ if (process.env.NODE_ENV !== 'test') {
 
     app.use(morgan('combined')); // 'combined' outputs the Apache style LOGs
 }
-
+//***********************************
 
 
 
@@ -51,10 +77,11 @@ app.use((req, res, next) => {
     next();
 });
 
+
+
 // Testing routes with method
 app.get("/user", (req, res) => {
-
-
+    console.log(req.body);
     res.json({
         data: {
             msg: "Got a GET request, sending back default 200"
@@ -62,10 +89,8 @@ app.get("/user", (req, res) => {
     });
 });
 
-
-
-
 app.post("/user", (req, res) => {
+    console.log(req.body);
     res.status(201).json({
         data: {
             msg: "Got a POST request, sending back 201 Created"
@@ -111,37 +136,11 @@ app.get("/createuser", (req, res) => {
 
 
 
-// // Add a route
-// app.get("/", (req, res) => {
-//     const data = {
-//         data: {
-//             msg: "Hello World"
-//         }
-//     };
-//
-//     res.json(data);
-// });
-//
-// app.get("/hello/:msg", (req, res) => {
-//     const data = {
-//         data: {
-//             msg: req.params.msg
-//         }
-//     };
-//
-//     res.json(data);
-// });
 
-// Start up server
+
+
+
 app.listen(port, () => console.log(`Example API listening on port ${port}!`));
-
-
-
-
-
-app.use(bodyParser.json()); // for parsing application/json
-app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
-
 
 
 
